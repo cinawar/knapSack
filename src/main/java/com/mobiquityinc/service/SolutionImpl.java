@@ -26,6 +26,7 @@ public class SolutionImpl implements Solution {
 		Map<String, Integer> pricemap = new HashMap<String, Integer>();
 
 		for (int i = 1; i < itemsList.size(); i++) {
+			// gerenate an ArrayList in each time with given Item list size ex (list has 6 member the I should calculate Combinations)
 			ArrayList<int[]> combinationList = generate(itemsList.size(), i);
 			for (int k = 0; k < combinationList.size(); k++) {
 				int[] element = combinationList.get(k);
@@ -36,6 +37,7 @@ public class SolutionImpl implements Solution {
 					totalPrice = totalPrice + itemsList.get(element[e]).getPrice();
 				}
 				if (totalWeight <= maxWeight && totalWeight <= capacity) {
+					// price are stored because when check the total weight if weight is equal then I prefer to choose biggest price
 					pricemap.put(Arrays.toString(combinationList.get(k)), (totalPrice));
 					calculatedList.put(Arrays.toString(combinationList.get(k)), totalWeight + totalPrice);
 				}
@@ -43,16 +45,21 @@ public class SolutionImpl implements Solution {
 		}
 
 		try {
+			// finding max weight in map list
 			Entry<String, Double> maxEntryWeight = calculatedList.entrySet().stream().max(Map.Entry.comparingByValue())
 					.get();
+			// finding max price in map list
 			Entry<String, Integer> maxEntryPrice = pricemap.entrySet().stream().max(Map.Entry.comparingByValue()).get();
 
 			String[] arrOfStr = null;
-
-			if (maxEntryWeight.getKey().equals(maxEntryPrice.getKey()))
+			// if weight and price equals exact match
+			if (maxEntryWeight.getKey().equals(maxEntryPrice.getKey())) {
 				arrOfStr = maxEntryWeight.getKey().replace("[", "").replace("]", "").split(",", 2);
-			else
+			}
+			else {
+				// if not then in the list bigger price exist and approach of knapsack I would prefer to choose biggest price
 				arrOfStr = maxEntryPrice.getKey().replace("[", "").replace("]", "").split(",", 2);
+			}
 
 			return commaSeperate(arrOfStr);
 		} catch (NoSuchElementException e) {
@@ -83,7 +90,7 @@ public class SolutionImpl implements Solution {
 	private String commaSeperate(String[] arrOfStr) {
 		int appendComma = 0;
 		StringBuilder returnList = new StringBuilder();
-
+		// adding comma seperate the indexes
 		for (String a : arrOfStr) {
 			Integer valIndex = (Integer.valueOf(a.trim()) + 1);
 			returnList.append(valIndex.toString());

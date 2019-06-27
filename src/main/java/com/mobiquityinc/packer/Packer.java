@@ -26,11 +26,12 @@ public class Packer {
 	public static String pack(String filePath) throws APIException {
 		try {
 			List<String> fileLines;
+			// read file from given path
 			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(filePath))));
 			fileLines = br.lines().parallel().map(Object::toString).collect(Collectors.toList());
 
 			StringBuffer sb = new StringBuffer();
-
+			// process each line one by one
 			for (Object line : fileLines) {
 				sb.append(Packer.process((String) line)).append("\n");
 			}

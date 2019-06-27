@@ -6,7 +6,7 @@ import com.mobiquityinc.packer.Packer;
 public class Main {
 
 	public static void main(String[] args) {
-
+		// file path can give Run configuration tab -> arguments ex c:\file.txt
 		if (args.length > 0) {
 			try {
 				System.out.println(Packer.pack(args[0]));
@@ -14,7 +14,8 @@ public class Main {
 				e.printStackTrace();
 			}
 		} else {
-			System.err.println("Please, enter a valid absolute filepath.");
+			// there is no args in the list prompt a message
+			System.err.println("Please, enter a filepath.");
 		}
 	}
 
